@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>ALV</title>
+  </head>
+  <body>
+    <div class="hero">
+      <h3>Welcome!</h3>
+      <h1>
+        Ourbrand New <br />
+        Website
+      </h1>
+      <p>Subscribe for more details.</p>
+      <form name="submit-to-google-sheet">
+        <input type="email" name="email" placeholder="Enter Your Email!" />
+        <button type="submit"><img src="send.svg" alt="" /></button>
+      </form>
+      <span id="msg"></span>
+    </div>
+    <script>
+      const scriptURL =
+        "https://script.google.com/macros/s/AKfycbwdi9RgsUejdWgI8DZCsa5c6XlGy48SXNwffDxHvOhz3J__fiu7uYt3SGcySKoScNVaOQ/exec";
+      const form = document.forms["submit-to-google-sheet"];
+      const msg = document.getElementById("msg");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        fetch(scriptURL, { method: "POST", body: new FormData(form) })
+          .then((response) => {
+            msg.innerHTML = "Thank You for subscribing!";
+            setTimeout(function () {
+              msg.innerHTML = "";
+            }, 5000);
+            form.reset();
+          })
+          .catch((error) => console.error("Error!", error.message));
+      });
+    </script>
+  </body>
+</html>
